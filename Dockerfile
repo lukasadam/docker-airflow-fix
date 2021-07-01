@@ -79,7 +79,6 @@ RUN curl -sSL https://get.docker.com/ | sh
 
 ADD ./script/wrapdocker /usr/local/bin/wrapdocker
 RUN chmod +x /usr/local/bin/wrapdocker
-RUN usermod -aG docker airflow
 
 RUN chown -R airflow: ${AIRFLOW_USER_HOME}
 
@@ -92,6 +91,9 @@ RUN chmod +x /entrypoint.sh
 RUN chmod +x ${AIRFLOW_USER_HOME}/airflow.cfg
 
 USER airflow
+
+RUN usermod -aG docker $USER
+RUN chmod +x /var/run/docker.sock
 
 WORKDIR ${AIRFLOW_USER_HOME}
 ENTRYPOINT ["/entrypoint.sh"]
