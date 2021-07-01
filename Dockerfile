@@ -79,17 +79,19 @@ RUN curl -sSL https://get.docker.com/ | sh
 
 ADD ./script/wrapdocker /usr/local/bin/wrapdocker
 RUN chmod +x /usr/local/bin/wrapdocker
-RUN usermod -aG docker airflow
+
 USER airflow
 
 COPY script/entrypoint.sh /entrypoint.sh
 COPY config/airflow.cfg ${AIRFLOW_USER_HOME}/airflow.cfg
 
 RUN chown -R airflow: ${AIRFLOW_USER_HOME}
+RUN usermod -aG docker airflow
+RUN newgrp docker
+RUN chmod 666 /var/run/docker.sock
 
 EXPOSE 8080 5555 8793
 
-USER airflow
 WORKDIR ${AIRFLOW_USER_HOME}
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["webserver"]
