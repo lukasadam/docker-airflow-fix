@@ -85,13 +85,13 @@ RUN chown -R airflow: ${AIRFLOW_USER_HOME}
 RUN usermod -aG docker airflow
 RUN newgrp docker
 
-USER airflow
-
 COPY script/entrypoint.sh /entrypoint.sh
 COPY config/airflow.cfg ${AIRFLOW_USER_HOME}/airflow.cfg
 
 RUN chmod +x /entrypoint.sh
 RUN chmod +x ${AIRFLOW_USER_HOME}/airflow.cfg
+
+USER airflow
 
 EXPOSE 8080 5555 8793
 
