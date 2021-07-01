@@ -90,6 +90,9 @@ USER airflow
 COPY script/entrypoint.sh /entrypoint.sh
 COPY config/airflow.cfg ${AIRFLOW_USER_HOME}/airflow.cfg
 
+RUN chmod +x /entrypoint.sh
+RUN chmod +x ${AIRFLOW_USER_HOME}/airflow.cfg
+
 EXPOSE 8080 5555 8793
 
 WORKDIR ${AIRFLOW_USER_HOME}
