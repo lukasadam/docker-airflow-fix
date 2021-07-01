@@ -84,7 +84,6 @@ RUN chown -R airflow: ${AIRFLOW_USER_HOME}
 
 RUN usermod -aG docker airflow
 RUN newgrp docker
-RUN chmod 666 /var/run/docker.sock
 
 USER airflow
 
