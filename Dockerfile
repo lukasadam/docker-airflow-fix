@@ -82,14 +82,14 @@ RUN chmod +x /usr/local/bin/wrapdocker
 
 RUN chown -R airflow: ${AIRFLOW_USER_HOME}
 
+RUN usermod -aG docker airflow
+RUN newgrp docker
+RUN chmod 666 /var/run/docker.sock
+
 USER airflow
 
 COPY script/entrypoint.sh /entrypoint.sh
 COPY config/airflow.cfg ${AIRFLOW_USER_HOME}/airflow.cfg
-
-RUN usermod -aG docker airflow
-RUN newgrp docker
-RUN chmod 666 /var/run/docker.sock
 
 EXPOSE 8080 5555 8793
 
